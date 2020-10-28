@@ -243,10 +243,12 @@ const deleteEmployee = function () {
             }
         ]).then(function (answer) {
             let employeeId;
+            let employeeName;
 
             for (let i = 0; i < employees.length; i++) {
                 if (employees[i].last_name == answer.chooseEmployee) {
                     employeeId = employees[i].id;
+                    employeeName = (`${employees[i].first_name} ${employees[i].last_name}`);
                 }
 
             }
@@ -255,7 +257,7 @@ const deleteEmployee = function () {
                     id: employeeId
                 }
             );
-            console.log(`\n${answer.chooseEmployee} was removed from the list of employees.\n`);
+            console.log(`\n${employeeName} was removed from the list of employees.\n`);
             mainPrompts();
         })
     })
@@ -382,7 +384,7 @@ function mainPrompts() {
                 value: 'all_roles_by_department'
             },
             {
-                name: 'See a list of all emplyees by department',
+                name: 'See a list of all employees by department',
                 value: 'employees_by_department'
             },
             {
@@ -422,7 +424,8 @@ function mainPrompts() {
                 deleteFunction();
                 break;
             case 'EXIT':
-                console.log('Peace out home skillet')
+            default:
+                console.log('Goodbye')
                 connection.end;
                 break;
         }
