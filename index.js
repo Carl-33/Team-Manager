@@ -15,13 +15,13 @@ var connection = mysql.createConnection({
     password: "rootroot",
     database: "team_db"
 });
-console.log('_____________________________\n');
-console.log('   TEAM BUILDING EXCERSISE   \n');
-console.log('_____________________________\n');
-console.log('          EXCERSIZE          \n');
-console.log('_____________________________\n');
-console.log('             BABAY           \n');
-console.log('_____________________________\n');
+console.log('______________________________\n');
+console.log('|    /        TEAM           /|\n');
+console.log('|   /                       / |\n');
+console.log('|  /        BUILDING       /  |\n');
+console.log('| /                       /   |\n');
+console.log('|/          EXERCIZE     /    |\n');
+console.log('|_____________________________|\n');
 
 
 connection.connect(function (err) {
@@ -177,7 +177,7 @@ const addDepartment = function () {
                 name: answer.name,
             }
         );
-        console.log(`\n${answer.name} was added to the list of department.\n`);
+        console.log(`\n${answer.name} was added to the list of departments.\n`);
         mainPrompts();
     })
 };
@@ -225,7 +225,95 @@ const addFunction = function () {
         }
     })
 };
+const deleteEmployee = function () {
+    connection.query('SELECT * FROM employees', function (err, employees) {
+        if (err) throw err;
+        inquirer.prompt([
+            {
+                type: "list",
+                name: 'chooseEmployee',
+                message: "Who would you like to remove?",
+                choices: function () {
+                    var employeesArray = [];
+                    for (let i = 0; i < employees.length; i++) {
+                        employeesArray.push(employees[i].last_name);
+                    }
+                    return employeesArray;
+                }
+            }
+        ]).then(function (answer) {
+            let employeeId;
 
+            for (let i = 0; i < employees.length; i++) {
+                if (employees[i].last_name == answer.chooseEmployee) {
+                    employeeId = employees[i].id;
+                }
+
+            }
+            connection.query("DELETE FROM employees WHERE ?",
+                {
+                    id: employeeId
+                }
+            );
+            console.log(`\n${answer.chooseEmployee} was removed from the list of employees.\n`);
+            mainPrompts();
+        })
+    })
+};
+const deleteRole = function () {
+    connection.query('SELECT * FROM roles', function (err, roles) {
+        if (err) throw err;
+        inquirer.prompt([
+            {
+                type: "list",
+                name: 'chooseRole',
+                message: "What role would you like to remove?",
+                choices: function () {
+                    let rolesArray = [];
+                    for (let i = 0; i < roles.length; i++) {
+                        rolesArray.push(roles[i].title);
+                    }
+                    return rolesArray;
+                }
+            }
+        ]).then(function (answer) {
+            connection.query("DELETE FROM roles WHERE ?",
+                {
+                    title: answer.chooseRole
+                }
+            );
+            console.log(`\n${answer.chooseRole} was removed from the list of roles.\n`);
+            mainPrompts();
+        })
+    })
+};
+const deleteDepartment = function () {
+    connection.query('SELECT * FROM departments', function (err, departments) {
+        if (err) throw err;
+        inquirer.prompt([
+            {
+                type: "list",
+                name: 'chooseDepartment',
+                message: "What department would you like to remove?",
+                choices: function () {
+                    let departmentsArray = [];
+                    for (let i = 0; i < departments.length; i++) {
+                        departmentsArray.push(departments[i].name);
+                    }
+                    return departmentsArray;
+                }
+            }
+        ]).then(function (answer) {
+            connection.query("DELETE FROM departments WHERE ?",
+                {
+                    name: answer.chooseDepartment
+                }
+            );
+            console.log(`\n${answer.chooseDepartment} was removed from the list of departments.\n`);
+            mainPrompts();
+        })
+    })
+};
 const deleteFunction = function () {
     inquirer.prompt([{
         type: 'list',
