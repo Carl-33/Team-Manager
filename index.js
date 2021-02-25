@@ -16,11 +16,11 @@ var connection = mysql.createConnection({
     database: "team_db"
 });
 console.log('______________________________\n');
-console.log('|    /        TEAM           /|\n');
-console.log('|   /                       / |\n');
-console.log('|  /        BUILDING       /  |\n');
-console.log('| /                       /   |\n');
-console.log('|/          EXERCIZE     /    |\n');
+console.log('|    / /      TEAM         / /|\n');
+console.log('|   / /                   / / |\n');
+console.log('|  / /      BUILDING     / /  |\n');
+console.log('| / /                   / /   |\n');
+console.log('|/ /        EXERCIZE   / /    |\n');
 console.log('|_____________________________|\n');
 
 
